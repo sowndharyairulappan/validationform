@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Details</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150vh;
+            margin: 2px;
+            background: url('1download.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            color: green;
+            text-align: center;
+        }
+
+        fieldset {
+            border: bold;
+            margin-bottom: 10px;
+            border: none;
+        }
+
+        form {
+            width: 700px;
+            background-color: transparent;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
+        }
+
+        input[type=text], input[type=date], textarea, input[type=email], input[type=tel], input[type=password] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid white;
+            border-radius: 4px;
+            background-color: transparent;
+            color: white;
+        }
+
+        button {
+            color: white;
+            cursor: pointer;
+            background-color: green;
+            padding: 10px;
+            font-size: medium;
+            margin-top: 20px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                background-size: cover;
+            }
+
+            form {
+                width: 90%;
+                padding: 10px;
+                box-shadow: none;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            form {
+                width: 90%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <form id="personalDetailsForm">
+        <fieldset>
+            <h1><b><u>PERSONAL DETAILS</u></b></h1>
+            <label> Enter First Name:</label>
+            <input type="text" name="firstName" required>
+            <br><br>
+            <label> Enter Last Name:</label>
+            <input type="text" name="lastName" required>
+            <br><br>
+            <label> Enter Email Id:</label>
+            <input type="email" name="email" required>
+            <br><br>
+            <label> Enter password:</label>
+            <input type="password" name="password" required>
+            <br><br>
+            <label>Phone Number:</label>
+            <input type="tel" name="phoneNumber" required>
+            <br><br>
+            <label>Date Of Birth:</label>
+            <input type="date" name="dob" required>
+            <br><br>
+            <label>Gender:</label>
+            <input type="radio" name="gender" value="male" required>Male
+            <input type="radio" name="gender" value="female" required>Female
+            <br><br>
+            <label> Enter Your Address:</label>
+            <textarea name="address" cols="50" rows="5" required></textarea>
+            <br><br>
+            <label>Hobbies:</label>
+            <input type="checkbox" name="hobby" value="photography">Photography
+            <input type="checkbox" name="hobby" value="reading">Reading
+            <input type="checkbox" name="hobby" value="writing">Writing
+            <br><br>
+            <button type="submit">Register</button>
+            <p>Already have an Account? <a href="index.html">Login</a></p>
+        </fieldset>
+    </form>
+
+    <script>
+        document.getElementById('personalDetailsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const firstName = document.querySelector("input[name='firstName']").value.trim();
+            const lastName = document.querySelector("input[name='lastName']").value.trim();
+            const email = document.querySelector("input[name='email']").value.trim();
+            const password = document.querySelector("input[name='password']").value.trim();
+            const phoneNumber = document.querySelector("input[name='phoneNumber']").value.trim();
+            const dob = document.querySelector("input[name='dob']").value;
+            const gender = document.querySelector("input[name='gender']:checked");
+            const address = document.querySelector("textarea[name='address']").value.trim();
+            const hobbies = document.querySelectorAll("input[name='hobby']:checked");
+
+            let isValid = true;
+            let errorMessage = "";
+
+            // First Name Validation
+            if (firstName === "") {
+                isValid = false;
+                errorMessage += "First Name is required.\n";
+            }
+
+            // Last Name Validation
+            if (lastName === "") {
+                isValid = false;
+                errorMessage += "Last Name is required.\n";
+            }
+
+            // Email Validation
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!email.match(emailPattern)) {
+                isValid = false;
+                errorMessage += "Please enter a valid email address.\n";
+            }
+
+            // Password Validation
+            if (password.length < 6) {
+                isValid = false;
+                errorMessage += "Password must be at least 6 characters long.\n";
+            }
+
+            // Phone Number Validation
+            const phonePattern = /^[0-9]{10}$/;
+            if (!phoneNumber.match(phonePattern)) {
+                isValid = false;
+                errorMessage += "Phone number must be a valid 10-digit number.\n";
+            }
+
+            // Date of Birth Validation
+            if (dob === "") {
+                isValid = false;
+                errorMessage += "Date of Birth is required.\n";
+            }
+
+            // Gender Validation
+            if (!gender) {
+                isValid = false;
+                errorMessage += "Please select your gender.\n";
+            }
+
+            // Address Validation
+            if (address === "") {
+                isValid = false;
+                errorMessage += "Address is required.\n";
+            }
+
+            // Hobbies Validation
+            if (hobbies.length === 0) {
+                isValid = false;
+                errorMessage += "Please select at least one hobby.\n";
+            }
+
+            // Display validation errors if invalid, otherwise submit form
+            if (!isValid) {
+                alert(errorMessage);
+            } else {
+                alert("Form submitted successfully!");
+                this.submit();
+            }
+        });
+    </script>
+
+</body>
+</html>
